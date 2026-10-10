@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>@three-ws/glb-tools: Inspect, re-theme, and bake GLB models from the shell or CI</title>
+<meta name="description" content="Inspect, re-theme, and bake GLB models from the shell or CI. The client SDK behind the three.ws 3D asset pipeline — structural inspection, token-themed mesh synthesis, and appearance baking over live three.ws endpoints.">
+<link rel="canonical" href="https://nirholas.github.io/glb-tools/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="three.ws">
+<meta property="og:title" content="@three-ws/glb-tools">
+<meta property="og:description" content="Inspect, re-theme, and bake GLB models from the shell or CI. The client SDK behind the three.ws 3D asset pipeline — structural inspection, token-themed mesh synthesis, and appearance baking over live three.ws endpoints.">
+<meta property="og:url" content="https://nirholas.github.io/glb-tools/">
+<meta property="og:image" content="https://nirholas.github.io/glb-tools/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="@three-ws/glb-tools">
+<meta name="twitter:description" content="Inspect, re-theme, and bake GLB models from the shell or CI. The client SDK behind the three.ws 3D asset pipeline — structural inspection, token-themed mesh synthesis, and appearance baking over live three.ws endpoints.">
+<meta name="twitter:image" content="https://nirholas.github.io/glb-tools/og.png">
+<meta name="keywords" content="3d, glb, gltf, gltf-transform, inspect, validate, optimize, bake, cli, three.ws, ai-agents">
+<link rel="alternate" type="text/plain" href="llms.txt" title="llms.txt">
+<link rel="icon" href="https://three.ws/three-ws-mcp-icon.svg" type="image/svg+xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"@three-ws/glb-tools","description":"Inspect, re-theme, and bake GLB models from the shell or CI. The client SDK behind the three.ws 3D asset pipeline — structural inspection, token-themed mesh synthesis, and appearance baking over live three.ws endpoints.","codeRepository":"https://github.com/nirholas/glb-tools","programmingLanguage":"JavaScript","license":"https://spdx.org/licenses/Apache-2.0.html","version":"0.1.2","url":"https://nirholas.github.io/glb-tools/","author":{"@type":"Organization","name":"three.ws","url":"https://three.ws"},"keywords":"3d, glb, gltf, gltf-transform, inspect, validate, optimize, bake, cli, three.ws, ai-agents"}</script>
+<style>:root{--bg:#fff;--fg:#111418;--mut:#586069;--line:#e3e6ea;--acc:#2563eb;--code:#f4f6f8;--card:#fafbfc}
+@media(prefers-color-scheme:dark){:root{--bg:#0b0d10;--fg:#e8eaed;--mut:#9aa3ad;--line:#232830;--acc:#6ea0ff;--code:#14181d;--card:#10141a}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:var(--acc)}a:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
+header.bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:700;text-decoration:none;color:var(--fg)}
+.bar nav{margin-left:auto;display:flex;gap:16px;font-size:14px}
+.bar nav a{color:var(--mut);text-decoration:none;transition:color .15s}.bar nav a:hover{color:var(--fg)}
+.hero{max-width:1100px;margin:0 auto;padding:48px 16px 24px}
+.hero h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 12px;letter-spacing:-.02em}
+.hero p{color:var(--mut);max-width:70ch;font-size:18px;margin:0 0 24px}
+.install{display:flex;align-items:center;gap:8px;max-width:620px;background:var(--code);border:1px solid var(--line);border-radius:10px;padding:6px 6px 6px 14px}
+.install code{flex:1;overflow-x:auto;white-space:nowrap;font:14px ui-monospace,SFMono-Regular,Menlo,monospace}
+.install button{border:0;background:var(--acc);color:#fff;border-radius:7px;padding:8px 14px;font:600 13px system-ui;cursor:pointer;transition:transform .12s,opacity .12s}
+.install button:hover{opacity:.9}.install button:active{transform:scale(.96)}
+.cta{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.cta a{padding:9px 16px;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;color:var(--fg);transition:border-color .15s,transform .15s}
+.cta a:hover{border-color:var(--acc);transform:translateY(-1px)}.cta a.pri{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.layout{max-width:1100px;margin:0 auto;padding:8px 16px 64px;display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:40px}
+@media(max-width:860px){.layout{grid-template-columns:minmax(0,1fr)}.toc{display:none}}
+.toc{position:sticky;top:76px;align-self:start;font-size:14px;border-left:1px solid var(--line);padding-left:16px}
+.toc p{margin:0 0 8px;font-weight:700;color:var(--mut);text-transform:uppercase;font-size:12px;letter-spacing:.06em}
+.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:6px 0}.toc a{color:var(--mut);text-decoration:none}.toc a:hover{color:var(--fg)}
+main{min-width:0;overflow-wrap:anywhere}main pre code{overflow-wrap:normal}main img{max-width:100%;height:auto}
+main h2{margin-top:2.2em;padding-bottom:.3em;border-bottom:1px solid var(--line)}
+.anchor{margin-left:-1.1em;padding-right:.4em;text-decoration:none;opacity:0;color:var(--mut)}h2:hover .anchor,h3:hover .anchor,h4:hover .anchor{opacity:1}
+pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:14px;line-height:1.5}
+code{font:0.9em ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--code);padding:.15em .35em;border-radius:5px}pre code{background:none;padding:0}
+table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%}th,td{border:1px solid var(--line);padding:8px 12px;text-align:left}th{background:var(--card)}
+blockquote{margin:1em 0;padding:.2em 1em;border-left:4px solid var(--line);color:var(--mut)}
+footer{border-top:1px solid var(--line);color:var(--mut);font-size:14px}
+.foot-in{max-width:1100px;margin:0 auto;padding:24px 16px;display:flex;gap:16px;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}</style>
+</head>
+<body>
+<header class="bar"><div class="bar-in">
+<a class="brand" href="https://nirholas.github.io/glb-tools/">@three-ws/glb-tools</a>
+<nav aria-label="Project links"><a href="https://github.com/nirholas/glb-tools">GitHub</a><a href="https://www.npmjs.com/package/@three-ws/glb-tools">npm</a><a href="llms.txt">llms.txt</a><a href="https://three.ws">three.ws</a></nav>
+</div></header>
+<section class="hero">
+<h1>@three-ws/glb-tools</h1>
+<p>Inspect, re-theme, and bake GLB models from the shell or CI. The client SDK behind the three.ws 3D asset pipeline — structural inspection, token-themed mesh synthesis, and appearance baking over live three.ws endpoints.</p>
+<div class="install" role="group" aria-label="Install command"><code>npm install @three-ws/glb-tools</code><button type="button" data-copy="npm install @three-ws/glb-tools">Copy</button></div>
+<div class="cta"><a class="pri" href="https://github.com/nirholas/glb-tools">View on GitHub</a><a href="https://github.com/nirholas/glb-tools/stargazers">Star the repo</a></div>
+</section>
+<div class="layout">
+<main id="content"><p align="center"><strong>Inspect, re-theme, and bake GLB models from the shell or CI — the toolkit behind three.ws's 3D asset pipeline.</strong></p><p align="center">
+  <a href="https://www.npmjs.com/package/@three-ws/glb-tools"><img alt="npm" src="https://img.shields.io/npm/v/@three-ws/glb-tools?logo=npm&color=cb3837"></a>
+  <a href="https://www.npmjs.com/package/@three-ws/glb-tools"><img alt="downloads" src="https://img.shields.io/npm/dm/@three-ws/glb-tools?color=cb3837"></a>
+  <img alt="license" src="https://img.shields.io/npm/l/@three-ws/glb-tools?color=3b82f6">
+  <img alt="node" src="https://img.shields.io/node/v/@three-ws/glb-tools?color=339933&logo=node.js">
+</p><p align="center">
+  <a href="#install">Install</a> ·
+  <a href="#quick-start">Quick start</a> ·
+  <a href="#api">API</a> ·
+  <a href="#how-it-works">How it works</a> ·
+  <a href="#pricing">Pricing</a> ·
+  <a href="https://three.ws">three.ws</a>
+</p><hr>
+<blockquote>
+<p><code>@three-ws/glb-tools</code> is the official client for the three.ws <strong>GLB pipeline</strong> —
+the same inspection, theming, and baking engine three.ws runs on every asset it
+serves. It wraps three live endpoints: structural model inspection
+(<code>/api/x402/model-check</code>), token-themed mesh synthesis
+(<code>/api/x402/mint-to-mesh</code>), and server-side appearance baking
+(<code>/api/avatars/:id</code>). One ergonomic call replaces a custom glTF parser, a
+<code>@gltf-transform</code> build chain, and the polling/billing plumbing around them. It
+pairs with <a href="https://www.npmjs.com/package/@three-ws/forge"><code>@three-ws/forge</code></a> —
+Forge <em>makes</em> the GLB, glb-tools <em>measures, themes, and optimizes</em> it.</p>
+</blockquote>
+<h2 id="why"><a class="anchor" href="#why" aria-label="Link to this section">#</a>Why</h2>
+<p>A GLB looks like one file but hides a graph: scenes, nodes, meshes, materials,
+textures, skins, animations, extensions. Answering &quot;how heavy is this, is it
+rigged, will it choke a phone, can I ship it&quot; means either booting a headless
+viewer or hand-writing a glTF-Transform pipeline — per asset, per CI run.
+glb-tools does it as a function call:</p>
+<ul>
+<li><strong>Inspect without a viewer.</strong> <code>inspect(url)</code> returns exact vertex/triangle
+counts, per-texture dimensions, per-material channel maps, extensions, and a
+prioritized list of optimization suggestions — no GPU, no browser, headless in
+CI.</li>
+<li><strong>Theme a token into a mesh.</strong> <code>theme(mint)</code> returns a watertight, instantly
+renderable GLB cube colored from a stable hash of the mint, with the token
+image baked on as a <code>baseColor</code> texture when one exists.</li>
+<li><strong>Bake an appearance once.</strong> <code>bake(avatarId, appearance)</code> flattens outfit
+morphs, color tints, bone-mounted accessories, and hidden layers into a single
+optimized GLB (weld → quantize → meshopt → WebP textures) that every viewer
+renders with zero runtime customization code.</li>
+</ul>
+<p>This is the SDK twin of the inspection tools exposed on the
+<a href="https://three.ws/mcp">3D Studio MCP server</a> — the same engine, as plain
+functions instead of MCP tools.</p>
+<h2 id="install"><a class="anchor" href="#install" aria-label="Link to this section">#</a>Install</h2>
+<pre><code class="language-bash">npm install @three-ws/glb-tools
+</code></pre>
+<p>Zero runtime dependencies. Works in Node 18+, modern browsers, and CI runners
+(uses <code>fetch</code>). To <em>generate</em> the GLBs you inspect, add
+<a href="https://www.npmjs.com/package/@three-ws/forge"><code>@three-ws/forge</code></a>.</p>
+<h2 id="quick-start"><a class="anchor" href="#quick-start" aria-label="Link to this section">#</a>Quick start</h2>
+<p>Inspect any public GLB — exact stats, no viewer:</p>
+<pre><code class="language-js">import { inspect } from &#39;@three-ws/glb-tools&#39;;
+
+const report = await inspect(&#39;https://three.ws/avatars/cesium-man.glb&#39;);
+
+console.log(report.model.counts.totalTriangles); // → 4672
+console.log(report.model.counts.skins &gt; 0);       // → true  (rigged)
+report.suggestions.forEach((s) =&gt; console.log(`[${s.severity}] ${s.message}`));
+</code></pre>
+<p>Turn a Solana mint into a renderable GLB:</p>
+<pre><code class="language-js">import { theme } from &#39;@three-ws/glb-tools&#39;;
+import { writeFile } from &#39;node:fs/promises&#39;;
+
+const out = await theme(&#39;FeMbDoX7R1Psc4GEcvJdsbNbZA3bfztcyDCatJVJpump&#39;); // $THREE
+console.log(out.theme.color);   // → [0.92, 0.45, 0.18]  (hashed from the mint)
+await writeFile(&#39;three.glb&#39;, out.bytes); // ready for three.js / model-viewer
+</code></pre>
+<p>Bake a customized appearance into one flat, optimized GLB:</p>
+<pre><code class="language-js">import { bake } from &#39;@three-ws/glb-tools&#39;;
+
+const baked = await bake(&#39;avatar_8f3a…&#39;, {
+  outfit: &#39;streetwear-01&#39;,
+  colors: { hair: &#39;#1b1b1f&#39;, outfit: &#39;#3b82f6&#39; },
+  accessories: [&#39;glasses-aviator&#39;],
+}, { token: process.env.THREE_WS_TOKEN });
+
+console.log(baked.bakedStorageKey, baked.sizeBytes);
+</code></pre>
+<h2 id="api"><a class="anchor" href="#api" aria-label="Link to this section">#</a>API</h2>
+<p>Public exports: <code>inspect</code>, <code>theme</code>, <code>bake</code>, <code>createGlbTools</code>, <code>ThreeWsError</code>,
+<code>PaymentRequiredError</code>, and <code>DEFAULT_BASE_URL</code>. The three headline functions
+use a shared zero-config client; <code>createGlbTools({ baseUrl, fetch, apiKey, headers })</code> builds your own when you need a payment-aware fetch, an owner
+token, or a custom origin reused across calls.</p>
+<h3 id="inspecturl-options-promiseinspectreport"><a class="anchor" href="#inspecturl-options-promiseinspectreport" aria-label="Link to this section">#</a><code>inspect(url, options?) → Promise&lt;InspectReport&gt;</code></h3>
+<p>Fetch a public glTF/GLB by URL and return its structure plus optimization
+advice. Wraps <code>GET /api/x402/model-check?url=&lt;url&gt;</code>. The model is parsed
+server-side with <code>@gltf-transform</code>; <strong>only the JSON/scene graph is analyzed</strong> —
+fast even on large meshes. Source URL must be public HTTPS; <strong>max 16 MiB</strong>.</p>
+<p><strong>Options</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>payWith</code></td>
+<td><code>&#39;x402&#39; | &#39;credits&#39;</code></td>
+<td><code>&#39;x402&#39;</code></td>
+<td>Billing lane (see <a href="#pricing">Pricing</a>).</td>
+</tr>
+<tr>
+<td><code>signal</code></td>
+<td><code>AbortSignal</code></td>
+<td>—</td>
+<td>Cancel an in-flight inspection.</td>
+</tr>
+</tbody></table>
+<p><strong>Returns</strong> <code>InspectReport</code></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>url</code></td>
+<td><code>string</code></td>
+<td>Canonicalized source URL.</td>
+</tr>
+<tr>
+<td><code>fetchedBytes</code></td>
+<td><code>number</code></td>
+<td>Bytes downloaded for analysis.</td>
+</tr>
+<tr>
+<td><code>model</code></td>
+<td><code>ModelInfo</code></td>
+<td>Structural summary (below).</td>
+</tr>
+<tr>
+<td><code>suggestions</code></td>
+<td><code>Suggestion[]</code></td>
+<td>Prioritized optimization advice.</td>
+</tr>
+</tbody></table>
+<p><code>ModelInfo</code> carries <code>container</code> (<code>&#39;glb&#39; \| &#39;gltf&#39;</code>), <code>generator</code>, <code>version</code>,
+<code>copyright</code>, <code>extensionsUsed</code>, <code>extensionsRequired</code>, a <code>counts</code> object
+(<code>scenes, nodes, meshes, materials, textures, animations, skins, totalVertices, totalTriangles, indexedPrimitives, nonIndexedPrimitives</code>), <code>primitiveModes</code>, a
+per-texture <code>textures[]</code> array (<code>name, mimeType, width, height, byteSize</code>), and a
+per-material <code>materials[]</code> array (<code>name, alphaMode, doubleSided, hasBaseColorTexture, hasNormalTexture, hasMetallicRoughnessTexture, hasEmissiveTexture, hasOcclusionTexture</code>). A non-empty <code>counts.skins</code> means the
+model is rigged.</p>
+<p>Each <code>Suggestion</code> is <code>{ id, severity: &#39;info&#39; | &#39;warn&#39; | &#39;critical&#39;, message, estimate? }</code> — e.g. <code>tri_budget</code> (decimate/LOD over 500k triangles), <code>draco</code>,
+<code>meshopt</code>, <code>texture_size</code>.</p>
+<h3 id="thememint-options-promisethemedmesh"><a class="anchor" href="#thememint-options-promisethemedmesh" aria-label="Link to this section">#</a><code>theme(mint, options?) → Promise&lt;ThemedMesh&gt;</code></h3>
+<p>Synthesize a themed GLB for a Solana fungible-token mint. Wraps
+<code>GET /api/x402/mint-to-mesh?mint=&lt;base58&gt;</code>. The server reads on-chain Metaplex
+metadata, colors a unit cube from a stable hash of the mint, and — when the
+off-chain metadata exposes a PNG/JPEG — embeds the token image as a <code>baseColor</code>
+texture on every face. The mint&#39;s name, symbol, and a timestamp are written to
+<code>asset.extras</code> so downstream agents can introspect the model.</p>
+<p><strong>Input</strong> — <code>mint</code> is a base58 SPL address (32–44 chars).</p>
+<p><strong>Returns</strong> <code>ThemedMesh</code></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>mint</code></td>
+<td><code>string</code></td>
+<td>Echoed mint address.</td>
+</tr>
+<tr>
+<td><code>theme.name</code></td>
+<td><code>string | null</code></td>
+<td>On-chain token name.</td>
+</tr>
+<tr>
+<td><code>theme.symbol</code></td>
+<td><code>string | null</code></td>
+<td>On-chain symbol.</td>
+</tr>
+<tr>
+<td><code>theme.color</code></td>
+<td><code>[number, number, number]</code></td>
+<td>RGB in <code>[0,1]</code>, the <code>baseColorFactor</code>.</td>
+</tr>
+<tr>
+<td><code>theme.imageUrl</code></td>
+<td><code>string | null</code></td>
+<td>Source image URL, when present.</td>
+</tr>
+<tr>
+<td><code>theme.hasImage</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code> when an image was embedded as a texture.</td>
+</tr>
+<tr>
+<td><code>bytes</code></td>
+<td><code>Uint8Array</code></td>
+<td>Decoded GLB bytes (from the response&#39;s base64).</td>
+</tr>
+<tr>
+<td><code>glb.mimeType</code></td>
+<td><code>&#39;model/gltf-binary&#39;</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>glb.bytes</code></td>
+<td><code>number</code></td>
+<td>GLB size in bytes.</td>
+</tr>
+</tbody></table>
+<p>The raw endpoint returns the GLB base64-encoded under <code>glb.base64</code>; the SDK
+decodes it for you into <code>bytes</code> and leaves <code>glb.bytes</code> as the size.</p>
+<h3 id="bakeavatarid-appearance-options-promisebakeresult"><a class="anchor" href="#bakeavatarid-appearance-options-promisebakeresult" aria-label="Link to this section">#</a><code>bake(avatarId, appearance, options?) → Promise&lt;BakeResult&gt;</code></h3>
+<p>Bake an <code>appearance</code> into a three.ws avatar&#39;s GLB, server-side. Wraps
+<code>PATCH /api/avatars/:id { appearance }</code>, which triggers the synchronous baker.
+<strong>Requires an authenticated owner token</strong> (the avatar belongs to a signed-in
+account).</p>
+<p><code>appearance</code> accepts any combination of:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>outfit</code></td>
+<td><code>string</code></td>
+<td>Outfit preset id — applies its morph bindings.</td>
+</tr>
+<tr>
+<td><code>accessories</code></td>
+<td><code>string[]</code></td>
+<td>Bone-mounted accessory preset ids (hats, glasses…).</td>
+</tr>
+<tr>
+<td><code>colors</code></td>
+<td><code>Record&lt;slot, hex&gt;</code></td>
+<td>Tint material slots (<code>skin</code>, <code>hair</code>, <code>outfit</code>, <code>glasses</code>).</td>
+</tr>
+<tr>
+<td><code>morphs</code></td>
+<td><code>Record&lt;name, 0..1&gt;</code></td>
+<td>Raw morph-target overrides (win over preset bindings).</td>
+</tr>
+<tr>
+<td><code>hidden</code></td>
+<td><code>string[]</code></td>
+<td>Slots to hide, exposing the base body.</td>
+</tr>
+</tbody></table>
+<p>A bakeable appearance returns <code>BakeResult</code> <code>{ avatarId, bakedStorageKey, appearanceHash, sizeBytes, cleared, bakeError }</code> (the endpoint&#39;s snake_case
+avatar fields, shaped to camelCase). An <strong>empty / cleared</strong> appearance clears
+the cached baked GLB (the base model is served again) and resolves with
+<code>bakedStorageKey: null</code> and <code>cleared: true</code>.</p>
+<h2 id="how-it-works"><a class="anchor" href="#how-it-works" aria-label="Link to this section">#</a>How it works</h2>
+<p>Three independent endpoints, one client. None of the heavy lifting happens in
+your process:</p>
+<pre><code>inspect(url) ─────▶ GET /api/x402/model-check?url=…
+                        │  fetch ≤16 MiB → @gltf-transform readJSON
+                        ▼
+                    counts · textures · materials · extensions
+                        + suggestOptimizations() → InspectReport
+
+theme(mint) ──────▶ GET /api/x402/mint-to-mesh?mint=…
+                        │  Metaplex metadata → colorFromMint() (FNV-1a hash)
+                        │  optional image → baseColor texture
+                        ▼
+                    createThemedGLB() → unit-cube GLB (base64) → ThemedMesh
+
+bake(id, appr) ───▶ PATCH /api/avatars/:id { appearance }
+                        │  applyMorphs · applyColors · merge accessories · applyHidden
+                        │  unpartition → prune → dedup → weld → quantize
+                        │  → meshopt → textureCompress (WebP, ≤1024px)
+                        ▼
+                    optimized GLB in R2 → BakeResult
+</code></pre>
+<ul>
+<li><strong>Inspect</strong> is read-only and deterministic: same URL in, same report out. It
+never executes shaders or rasterizes — it walks the scene graph.</li>
+<li><strong>Theme</strong> is &quot;mint to mesh&quot;: a fully conformant glTF 2.0 cube that any
+Three.js, Babylon.js, or <code>&lt;model-viewer&gt;</code> instance renders directly, with the
+full on-chain metadata in <code>asset.extras</code>.</li>
+<li><strong>Bake</strong> is a one-shot flatten + compress. Bone-name matching tolerates the
+common <code>mixamorig:</code>, <code>CC_Base_</code>, and <code>rig_</code> prefixes, so accessories attach to
+any upstream rigger&#39;s skeleton without renaming.</li>
+</ul>
+<h2 id="pricing"><a class="anchor" href="#pricing" aria-label="Link to this section">#</a>Pricing</h2>
+<p>The inspection and theming endpoints are pay-per-call x402 lanes settled in USDC
+(6-decimal atomics):</p>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Endpoint</th>
+<th>Lane</th>
+<th>Price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>inspect()</code></td>
+<td><code>/api/x402/model-check</code></td>
+<td>x402 / USDC on <strong>Solana</strong></td>
+<td><strong>$0.001</strong> per call</td>
+</tr>
+<tr>
+<td><code>theme()</code></td>
+<td><code>/api/x402/mint-to-mesh</code></td>
+<td>x402 / USDC on <strong>Solana</strong></td>
+<td><strong>$0.001</strong> per call</td>
+</tr>
+<tr>
+<td><code>bake()</code></td>
+<td><code>/api/avatars/:id</code></td>
+<td>authenticated owner</td>
+<td>included with the avatar</td>
+</tr>
+</tbody></table>
+<p>Set <code>payWith: &#39;x402&#39;</code> (default) to pay per call with USDC, or <code>payWith: &#39;credits&#39;</code> to draw from a signed-in prepaid balance. Pair with
+<a href="https://www.npmjs.com/package/@three-ws/x402-fetch"><code>@three-ws/x402-fetch</code></a> to
+automate the 402 settlement. Internal/subscription/OAuth callers can be granted a
+payment bypass (<code>x-payment-bypass</code> header on the response). Both x402 routes are
+also exposed as MCP tools on the <a href="https://three.ws/mcp">3D Studio server</a>.</p>
+<h2 id="errors-edge-cases"><a class="anchor" href="#errors-edge-cases" aria-label="Link to this section">#</a>Errors &amp; edge cases</h2>
+<p><code>inspect()</code>, <code>theme()</code>, and <code>bake()</code> reject with a typed <code>ThreeWsError</code>
+carrying a <code>code</code> and <code>status</code>. A payment challenge (HTTP 402, or the
+x402-over-401 envelope some transports use) rejects with its
+<code>PaymentRequiredError</code> subclass, whose <code>accepts</code> field carries the x402
+challenge. Client-side validation (a missing or malformed <code>url</code>, <code>mint</code>,
+<code>avatarId</code>, or <code>appearance</code>) rejects with <code>code: &#39;invalid_input&#39;</code> or
+<code>&#39;invalid_mint&#39;</code> before any network call. Server-side codes mirror the
+endpoint&#39;s error contract:</p>
+<table>
+<thead>
+<tr>
+<th><code>code</code></th>
+<th>HTTP</th>
+<th>Meaning</th>
+<th>Recovery</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>missing_url</code> / <code>missing_mint</code></td>
+<td>400</td>
+<td>Required input omitted.</td>
+<td>Pass <code>url</code> / <code>mint</code>.</td>
+</tr>
+<tr>
+<td><code>invalid_url</code></td>
+<td>400</td>
+<td>Not a fetchable HTTPS URL.</td>
+<td>Use a public HTTPS GLB.</td>
+</tr>
+<tr>
+<td><code>invalid_mint</code></td>
+<td>400</td>
+<td>Not a base58 SPL address (32–44 chars).</td>
+<td>Pass a valid mint.</td>
+</tr>
+<tr>
+<td><code>payment_required</code></td>
+<td>402</td>
+<td>x402 lane with no payment proof.</td>
+<td>Provide an x402 payer or use credits.</td>
+</tr>
+<tr>
+<td><code>method_not_allowed</code></td>
+<td>405</td>
+<td>Wrong HTTP verb.</td>
+<td>The SDK uses the correct verb; surfaces only on raw calls.</td>
+</tr>
+<tr>
+<td><code>verify_failed</code> / <code>settle_failed</code></td>
+<td>502</td>
+<td>Payment verification/settlement upstream failed.</td>
+<td>Retry; check the payer balance.</td>
+</tr>
+<tr>
+<td><code>internal_error</code></td>
+<td>500</td>
+<td>Upstream parse/build error.</td>
+<td>Retry, or check the input asset.</td>
+</tr>
+</tbody></table>
+<p>Inspection rejects oversized inputs before download (the <strong>16 MiB</strong> cap), so a
+runaway URL fails fast rather than streaming forever. A bake of an empty
+appearance is <strong>not</strong> an error — it intentionally clears the cached baked GLB.
+Every state is designed: a missing key returns a <code>code</code>, not a crash.</p>
+<h2 id="examples"><a class="anchor" href="#examples" aria-label="Link to this section">#</a>Examples</h2>
+<p><strong>CI asset gate</strong> — fail the build when a model busts the triangle budget:</p>
+<pre><code class="language-js">import { inspect } from &#39;@three-ws/glb-tools&#39;;
+
+const { model, suggestions } = await inspect(process.env.MODEL_URL, {
+  payWith: &#39;credits&#39;,
+});
+const critical = suggestions.filter((s) =&gt; s.severity === &#39;critical&#39;);
+if (model.counts.totalTriangles &gt; 250_000 || critical.length) {
+  console.error(&#39;Model exceeds web budget:&#39;, model.counts.totalTriangles);
+  process.exit(1);
+}
+</code></pre>
+<p><strong>Forge → inspect</strong> — generate, then verify it&#39;s rig-ready before shipping:</p>
+<pre><code class="language-js">import { forge } from &#39;@three-ws/forge&#39;;
+import { inspect } from &#39;@three-ws/glb-tools&#39;;
+
+const { glbUrl } = await forge(&#39;a cartoon astronaut, full body&#39;);
+const { model } = await inspect(glbUrl);
+console.log(&#39;rigged:&#39;, model.counts.skins &gt; 0, &#39;· tris:&#39;, model.counts.totalTriangles);
+</code></pre>
+<p><strong>Theme a token, render inline</strong> in the browser:</p>
+<pre><code class="language-html">&lt;script type=&quot;module&quot;&gt;
+  import { theme } from &#39;@three-ws/glb-tools&#39;;
+
+  const { bytes } = await theme(&#39;FeMbDoX7R1Psc4GEcvJdsbNbZA3bfztcyDCatJVJpump&#39;); // $THREE
+  const url = URL.createObjectURL(new Blob([bytes], { type: &#39;model/gltf-binary&#39; }));
+  const el = Object.assign(document.createElement(&#39;model-viewer&#39;), { src: url });
+  document.body.append(el);
+&lt;/script&gt;
+</code></pre>
+<h2 id="related"><a class="anchor" href="#related" aria-label="Link to this section">#</a>Related</h2>
+<ul>
+<li><a href="https://www.npmjs.com/package/@three-ws/forge"><code>@three-ws/forge</code></a> — generate the textured, rig-ready GLB that glb-tools inspects and bakes.</li>
+<li><a href="https://www.npmjs.com/package/@three-ws/avatar"><code>@three-ws/avatar</code></a> — render and animate the baked GLB.</li>
+<li><a href="https://www.npmjs.com/package/@three-ws/x402-fetch"><code>@three-ws/x402-fetch</code></a> — auto-pay the x402 inspect/theme lanes.</li>
+<li><a href="https://www.npmjs.com/package/@three-ws/avatar-schema"><code>@three-ws/avatar-schema</code></a> — validate on-chain avatar manifests.</li>
+</ul>
+<hr>
+<p align="center">Built by <a href="https://three.ws">three.ws</a> · The only coin is <a href="https://three.ws">$THREE</a></p>
+</main>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#why">Why</a></li><li><a href="#install">Install</a></li><li><a href="#quick-start">Quick start</a></li><li><a href="#api">API</a></li><li><a href="#how-it-works">How it works</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#errors-edge-cases">Errors &amp; edge cases</a></li><li><a href="#examples">Examples</a></li><li><a href="#related">Related</a></li></ul></nav>
+</div>
+<footer><div class="foot-in"><span>Apache-2.0 licensed</span><a href="https://github.com/nirholas/glb-tools/issues">Issues</a><a href="https://github.com/nirholas/glb-tools/blob/main/CONTRIBUTING.md">Contributing</a><a href="https://github.com/nirholas/glb-tools/security/policy">Security</a><a href="https://three.ws">Part of three.ws</a></div></footer>
+<script>document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){
+var t=b.getAttribute('data-copy');var done=function(){var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o},1400)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){})}
+else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){}a.remove()}})});</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+{
+	"name": "@three-ws/glb-tools",
+	"version": "0.1.2",
+	"description": "Inspect, re-theme, and bake GLB models from the shell or CI. The client SDK behind the three.ws 3D asset pipeline — structural inspection, token-themed mesh synthesis, and appearance baking over live three.ws endpoints.",
+	"type": "module",
+	"main": "./src/index.js",
+	"module": "./src/index.js",
+	"types": "./src/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./src/index.d.ts",
+			"import": "./src/index.js",
+			"default": "./src/index.js"
+		},
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"src",
+		"README.md",
+		"LICENSE"
+	],
+	"scripts": {
+		"test": "node --test test/*.test.js"
+	},
+	"keywords": [
+		"3d",
+		"glb",
+		"gltf",
+		"gltf-transform",
+		"inspect",
+		"validate",
+		"optimize",
+		"bake",
+		"cli",
+		"three.ws",
+		"ai-agents"
+	],
+	"author": "nirholas <support@three.ws>",
+	"license": "Apache-2.0",
+	"homepage": "https://nirholas.github.io/glb-tools/",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nirholas/glb-tools.git"
+	},
+	"bugs": {
+		"url": "https://github.com/nirholas/glb-tools/issues"
+	},
+	"engines": {
+		"node": ">=18"
+	},
+	"dependencies": {},
+	"publishConfig": {
+		"access": "public"
+	}
+}
