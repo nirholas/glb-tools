@@ -2,9 +2,19 @@
   "name": "glb-tools",
   "version": "0.1.2",
   "description": "Inspect GLB models, theme a Solana mint into a GLB, and bake avatar appearances with the @three-ws/glb-tools SDK.",
-  "author": {"name": "nirholas"},
+  "author": {
+    "name": "nirholas"
+  },
   "repository": "https://github.com/nirholas/glb-tools",
+  "homepage": "https://nirholas.github.io/glb-tools/",
   "license": "Apache-2.0",
-  "keywords": ["glb", "gltf", "3d", "inspect", "bake", "three-ws", "sdk"],
-  "homepage": "https://nirholas.github.io/glb-tools/"
+  "keywords": [
+    "glb",
+    "gltf",
+    "3d",
+    "inspect",
+    "bake",
+    "three-ws",
+    "sdk"
+  ]
 }
