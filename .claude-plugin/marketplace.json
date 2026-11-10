@@ -1,0 +1,13 @@
+{
+  "name": "glb-tools",
+  "owner": {"name": "nirholas"},
+  "description": "Claude Code plugin for the @three-ws/glb-tools GLB inspection, theming and baking SDK.",
+  "plugins": [
+    {
+      "name": "glb-tools",
+      "source": "./",
+      "description": "Teaches an agent to inspect GLB/glTF models, theme a mint into a GLB and bake avatar appearances.",
+      "tags": ["glb", "gltf", "3d", "sdk"]
+    }
+  ]
+}
